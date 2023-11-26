@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Web Push Notifications Sample</title>
+</head>
+<body>
+<h2>Firebase Web Push Notification</h2>
+<script type="module">
+    import { startMessaging } from '/gt-fcm-wrapper-main.js'
+    const config = {
+        firebaseConfig: {
+            apiKey: "",
+            projectId: "",
+            messagingSenderId: "",
+            appId: "",
+        },
+        vapidKey: '',
+        serviceWorkerPath: '/sw.js'
+    };
+    startMessaging(config).then(token => {
+        console.log("Token", token);
+    });
+</script>
+</body>
+</html>

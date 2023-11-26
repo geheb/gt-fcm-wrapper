@@ -1,0 +1,20 @@
+{
+  "name": "gt-fcm-wrapper",
+  "version": "1.0.0",
+  "author": "gethomast",
+  "description": "Wrapper for Web Push Notifications via Firebase Cloud Messaging ",
+  "license": "MIT",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "build:dev": "esbuild *.ts --bundle --platform=browser --target=ES2020 --outdir=dev --format=esm",
+    "serve": "esbuild --serve=8080 --servedir=dev"
+  },
+  "dependencies": {
+    "firebase": "^10.6.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2"
+  }
+}
