@@ -67,6 +67,7 @@ You will receive a notification after successful setup. This should be accepted:
 ![Allow Send Push](.github/readme/allow-send-push.png)
 
 Finally, after page refresh the token is shown in Console:
+
 ![Alt text](.github/readme/show-token-in-console.png)
 
 ## Send Web Push Notifications
