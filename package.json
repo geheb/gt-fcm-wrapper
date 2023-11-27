@@ -1,6 +1,6 @@
 {
   "name": "gt-fcm-wrapper",
-  "version": "1.0.0",
+  "version": "0.0.1-SNAPSHOT",
   "author": "gethomast",
   "description": "Wrapper for Web Push Notifications via Firebase Cloud Messaging ",
   "license": "MIT",
