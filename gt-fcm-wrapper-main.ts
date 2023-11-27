@@ -27,10 +27,10 @@ const requestNotificationPermission = async () => {
 };
 
 const requestToken = async (messaging: Messaging, vapidKey: string, sw: ServiceWorkerRegistration) => {
-  return await getToken(messaging, {vapidKey: vapidKey, serviceWorkerRegistration: sw })
+  return await getToken(messaging, { vapidKey: vapidKey, serviceWorkerRegistration: sw })
     .then(token => token)
     .catch(_ => new Promise(r => setTimeout(r, 1000)))
-    .then(() => getToken(messaging, {vapidKey: vapidKey, serviceWorkerRegistration: sw }))
+    .then(() => getToken(messaging, { vapidKey: vapidKey, serviceWorkerRegistration: sw }))
     .catch(error => {
       console.error("An error occurred while requesting token", error);
       return null;
