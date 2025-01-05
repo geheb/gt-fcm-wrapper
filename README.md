@@ -22,10 +22,10 @@ Finally, get the Vapid Key via Web Push Certificates:
 
 Put the lib in your application. If different, you must adjust the paths everywhere! E.g.:
 
-* /lib/gt-fcm-wrapper/gt-fcm-wrapper-main-1.0.0.min.js
-* /lib/gt-fcm-wrapper/gt-fcm-wrapper-sw-1.0.0.min.js
+* /lib/gt-fcm-wrapper/gt-fcm-init-1.0.0.min.js
+* /lib/gt-fcm-wrapper/gt-fcm-worker-1.0.0.min.js
 
-Create your custom Service Worker file e.g. /js/my-service-worker-1.0.0.js and update the Firebase configuration:
+Create your custom Service Worker file e.g. /js/sw.js and update the Firebase configuration:
 
 ```
 const firebaseConfig = {
@@ -34,14 +34,14 @@ const firebaseConfig = {
     messagingSenderId: "",
     appId: ""
 };
-importScripts('/lib/gt-fcm-wrapper/gt-fcm-wrapper-sw-1.0.0.min.js');
+importScripts('/lib/gt-fcm-wrapper/gt-fcm-worker-1.0.0.min.js');
 ```
 
 Finally, update your page to get the desired Device Token. Please remember the Firebase configuration and the Vapid Key:
 
 ```
 <script type="module">
-    import { startMessaging } from '/lib/gt-fcm-wrapper/gt-fcm-wrapper-main-1.0.0.min.js'
+    import { startMessaging } from '/lib/gt-fcm-wrapper/gt-fcm-init-1.0.0.min.js'
     const config = {
         firebaseConfig: {
             apiKey: "...",
@@ -50,11 +50,10 @@ Finally, update your page to get the desired Device Token. Please remember the F
             appId: "...",
         },
         vapidKey: "...",
-        serviceWorkerPath: '/js/my-service-worker-1.0.0.js'
+        serviceWorkerPath: '/js/sw.js'
     };
     startMessaging(config).then(token => {
         console.log("Token", token);
-
         // TODO: Persist the Device Token in your backend
     });
 </script>
@@ -72,17 +71,21 @@ Finally, after page refresh the token is shown in Console:
 
 ## Send Web Push Notifications
 
-Go to Firebase Console and create a campaign:
-
-![Create Messaging](.github/readme/create-messaging.png)
-
-Create a test notification:
-
-![Send test message](.github/readme/create-test-message.png)
-
-Test the message and paste the Token from Console:
-
-![Test with token](.github/readme/test-with-token.png)
+```
+// TODO: provide the client token
+var registrationToken = "...";
+var message = new Message()
+{
+    Data = new Dictionary<string, string>()
+    {
+        { "title", "foo" },
+        { "body", "bar" },
+    },
+    Token = registrationToken,
+};
+string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+Console.WriteLine("Successfully sent message: " + response);
+```
 
 Voilà, the message is received by your Browser:
 

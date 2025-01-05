@@ -32,7 +32,7 @@ const requestToken = async (messaging: Messaging, vapidKey: string, sw: ServiceW
     .catch(_ => new Promise(r => setTimeout(r, 1000)))
     .then(() => getToken(messaging, { vapidKey: vapidKey, serviceWorkerRegistration: sw }))
     .catch(error => {
-      console.error("An error occurred while requesting token", error);
+      console.error("An error occurred while requesting token from FCM", error);
       return null;
     });
 };
@@ -51,6 +51,23 @@ export const startMessaging = async (config: MessagingConfig) => {
       return null;
     }
   }
+
+  // triggerd by lib if window is active, chrome only
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    const data = event.data?.data;
+    if (data?.title && data?.body) {
+      var notify = new Notification(data.title, {
+        body: data.body,
+        icon: data.icon,
+      });
+      if (data.url) {
+        notify.onclick = function () {
+          window.open(new URL(data.url));
+        };
+      }
+    }
+  });
+
   const sw = await navigator.serviceWorker.register(config.serviceWorkerPath);
   const token = await requestToken(messaging, config.vapidKey, sw);
   return token;
